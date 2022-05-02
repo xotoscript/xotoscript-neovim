@@ -54,23 +54,18 @@ function removeInstalled() {
 
 ################################################ PROCESS
 
-if [ $(which nvim 2>/dev/null) ]; then
-	echo "${GREEN}NVIM FOUND...${NC}"
+echo "${GREEN}NVIM FOUND...${NC}"
 
-	removeInstalled
+removeInstalled
+install
 
-	install
-
-	echo ""
-	echo "${GREEN}COMPLETED...${NC}"
-else
-	echo "${GREEN}NVIM NOT FOUND...${NC}"
-
-	install
-
-	echo ""
-	echo "${RED}NVIM INSTALL WITHOUT REMOVE...${NC}"
-
+if [ -d "${HOME}/.config" ]; then
+	mkdir ${HOME}/.config
 fi
+
+git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
+
+echo ""
+echo "${GREEN}COMPLETED...${NC}"
 
 ################################################ END
