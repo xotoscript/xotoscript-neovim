@@ -27,8 +27,8 @@ function install() {
 	echo "☑ installing from : "
 	echo "https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/$OS $USERHOME/$OS"
 	echo ""
-	sudo curl -LO https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/$OS $USER_HOME/$OS| bash
-	tar xzvf $USERHOME/$OS 
+	sudo curl -LO https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/$OS $USER_HOME/$OS | bash
+	tar xzvf $USERHOME/$OS
 	sudo ln -sf $USERHOME/$OS/bin/nvim /usr/local/bin/nvim
 }
 
@@ -36,6 +36,6 @@ function install() {
 
 install
 
-echo "complete : 🍳"
+echo "✅ script complete"
 
 ################################################
