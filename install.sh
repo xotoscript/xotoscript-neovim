@@ -11,15 +11,6 @@ else
 	NEOVIM_VERSION=$1
 fi
 
-# CHECK BYPASS
-if [[ "$2" == false ]]; then
-	BYPASS=true
-else
-	BYPASS=false
-fi
-
-echo "$2"
-
 ################################################ EDITOR
 
 function install() {
@@ -30,14 +21,8 @@ function install() {
 
 ################################################ EDITOR
 
-if [[ $(which vim 2>/dev/null) && BYPASS = true ]]; then
-	echo "vim found"
 	install
-else
-	echo "vim is not found please install it "
 
-fi
-
-echo "complete : "
+echo "complete : 🍳"
 
 ################################################
