@@ -4,7 +4,6 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-NEOVIM_VERSION=0.6.0
 SYSTEM_OSS=''
 SYSTEM_OS="$(uname)"
 
@@ -34,7 +33,7 @@ esac
 
 function install() {
 	echo "${GREEN}Installing NVIM...${NC}"
-	URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/${SYSTEM_OSS}.tar.gz"
+	URL="https://github.com/neovim/neovim/releases/download/v$VERSION/${SYSTEM_OSS}.tar.gz"
 	echo $URL
 	echo ""
 	curl -LO $URL
