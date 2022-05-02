@@ -1,11 +1,10 @@
 #!/bin/sh
 
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-NEOVIM_VERSION=0.7.0
+NEOVIM_VERSION=0.6.0
 SYSTEM_OSS=''
 SYSTEM_OS="$(uname)"
 
