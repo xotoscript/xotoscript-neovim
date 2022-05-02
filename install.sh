@@ -24,26 +24,48 @@ fi
 ################################################ EDITOR
 
 function install() {
-
 	URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/${SYSTEM_OSS}.tar.gz"
 	echo "🖍 installing from : "
 	echo $URL
 	echo ""
-
 	curl -LO $URL
-
 	tar -xvf ${SYSTEM_OSS}.tar.gz
 	rm -rf ${SYSTEM_OSS}.tar.gz
-
 	mv ./${FILE} ${HOME}/${FILE}
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
+}
 
+function removeInstalled() {
+	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage \
+		/usr/local/Cellar/nvim \
+		/usr/local/bin/nvim \
+		${HOME}/.cache/nvim \
+		${HOME}/.cache/nvim \
+		${HOME}/.local/share/nvim \
+		/usr/local/share/lua \
+		/usr/local/Cellar/luajit-openresty \
+		/usr/local/share/luajit-2.1.0-beta3 \
+		/usr/local/lib/lua
 }
 
 ################################################ EDITOR
 
-install
-echo ""
-echo "✅ script complete"
+if [ $(which nvim 2>/dev/null) ]; then
+	echo "NEOVIM FOUND"
+
+	echo "REMOVING"
+	removeInstalled
+
+	echo "INSTALLING"
+	install
+
+	echo ""
+	echo "✅ script complete"
+else
+	echo "NEOVIM not found"
+	install
+	echo ""
+	echo "✅ script complete"
+fi
 
 ################################################
