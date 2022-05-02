@@ -1,20 +1,20 @@
-USERHOME=$HOME
 VERSION=0.6.0
+SYSTEM_OSS=''
+SYSTEM_OS="$(uname)"
+
 ################################################ EDITOR
 
-# Detect the platform (similar to $OSTYPE)
-OS="$(uname)"
-case $OS in
+case $SYSTEM_OS in
 'Linux')
-	OS='nvim-linux64.tar.gz'
+	SYSTEM_OSS='nvim-linux64'
 	;;
 'Darwin')
-	OS='nvim-macos.tar.gz'
+	SYSTEM_OSS='nvim-macos'
+	FILE="nvim-osx64"
 	;;
 *) ;;
 esac
 
-# CHECK VERSION
 if [[ "$1" = "" ]]; then
 	NEOVIM_VERSION=$VERSION
 else
@@ -24,18 +24,26 @@ fi
 ################################################ EDITOR
 
 function install() {
-	echo "☑ installing from : "
-	echo "https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/$OS $USERHOME/$OS"
+
+	URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/${SYSTEM_OSS}.tar.gz"
+	echo "🖍 installing from : "
+	echo $URL
 	echo ""
-	sudo curl -LO https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/$OS $USER_HOME/$OS | bash
-	tar xzvf $USERHOME/$OS
-	sudo ln -sf $USERHOME/$OS/bin/nvim /usr/local/bin/nvim
+
+	curl -LO $URL
+
+	tar -xvf ${SYSTEM_OSS}.tar.gz
+	rm -rf ${SYSTEM_OSS}.tar.gz
+
+	mv ./${FILE} ${HOME}/${FILE}
+	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
+
 }
 
 ################################################ EDITOR
 
 install
-
+echo ""
 echo "✅ script complete"
 
 ################################################
