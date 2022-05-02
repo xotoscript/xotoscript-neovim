@@ -1,11 +1,11 @@
 #!/bin/sh
 
-NEOVIM_VERSION=0.7.0
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+NEOVIM_VERSION=0.7.0
 SYSTEM_OSS=''
 SYSTEM_OS="$(uname)"
 
@@ -39,7 +39,7 @@ function install() {
 	echo $URL
 	echo ""
 	curl -LO $URL
-	tar -xvf ${SYSTEM_OSS}.tar.gz
+	tar xzvf ${SYSTEM_OSS}.tar.gz
 	rm -rf ${SYSTEM_OSS}.tar.gz
 	mv ./${FILE} ${HOME}/${FILE}
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
@@ -70,6 +70,7 @@ else
 
 	echo ""
 	echo "${RED}NVIM INSTALL WITHOUT REMOVE...${NC}"
+
 fi
 
 ################################################ END
