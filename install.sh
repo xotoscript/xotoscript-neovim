@@ -3,8 +3,8 @@ VERSION=0.6.0
 ################################################ EDITOR
 
 # Detect the platform (similar to $OSTYPE)
-OSMAN="$(uname)"
-case $OSMAN in
+OS="$(uname)"
+case $OS in
 'Linux')
 	OS='nvim-linux64.tar.gz'
 	;;
@@ -28,9 +28,7 @@ function install() {
 	echo "https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS"
 	echo ""
 	sudo curl -LO https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS | bash
-
 	tar xzvf ${USER_HOME}/$OS
-
 	sudo ln -sf ${USER_HOME}/$OS/bin/nvim /usr/local/bin/nvim
 }
 
