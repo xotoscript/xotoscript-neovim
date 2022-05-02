@@ -1,8 +1,23 @@
+#!/bin/sh
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 VERSION=0.6.0
 SYSTEM_OSS=''
 SYSTEM_OS="$(uname)"
 
-################################################ EDITOR
+trap cleanup 1 2 3 6
+PROXY_ID=''
+cleanup() {
+	echo "Cleanup..."
+	kill -9 ${PROXY_ID}
+	echo "Done cleanup ... quitting."
+	exit 1
+}
+
+################################################ CASES
 
 case $SYSTEM_OS in
 'Linux')
@@ -21,11 +36,12 @@ else
 	NEOVIM_VERSION=$1
 fi
 
-################################################ EDITOR
+################################################ INSTALL
 
 function install() {
+	echo "${GREEN}Installing NVIM...${NC}"
+
 	URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/${SYSTEM_OSS}.tar.gz"
-	echo "🖍 installing from : "
 	echo $URL
 	echo ""
 	curl -LO $URL
@@ -35,8 +51,14 @@ function install() {
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
 }
 
+################################################ REMOVE
+
 function removeInstalled() {
-	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage \
+
+	echo "${RED}REMOVING NVIM...${NC}"
+
+	rm -rf ${HOME}/nvim-osx64 \
+		${HOME}/nvim.appimage \
 		/usr/local/Cellar/nvim \
 		/usr/local/bin/nvim \
 		${HOME}/.cache/nvim \
@@ -48,24 +70,24 @@ function removeInstalled() {
 		/usr/local/lib/lua
 }
 
-################################################ EDITOR
+################################################ PROCESS
 
 if [ $(which nvim 2>/dev/null) ]; then
-	echo "NEOVIM FOUND"
+	echo "${GREEN}NVIM FOUND...${NC}"
 
-	echo "REMOVING"
 	removeInstalled
 
-	echo "INSTALLING"
 	install
 
 	echo ""
-	echo "✅ script complete"
+	echo "${GREEN}COMPLETED...${NC}"
 else
-	echo "NEOVIM not found"
+	echo "${GREEN}NVIM NOT FOUND...${NC}"
+
 	install
+
 	echo ""
-	echo "✅ script complete"
+	echo "${RED}NVIM INSTALL NOT COMPLETE NVIM...${NC}"
 fi
 
-################################################
+################################################ END
