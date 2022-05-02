@@ -37,7 +37,7 @@ function install() {
 	echo $URL
 	echo ""
 	curl -LO $URL
-	tar xzvf ${SYSTEM_OSS}.tar.gz
+	tar xzvf ${SYSTEM_OSS}.tar.gz >/dev/null 2>&1
 	rm -rf ${SYSTEM_OSS}.tar.gz
 	mv ./${FILE} ${HOME}/${FILE}
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
