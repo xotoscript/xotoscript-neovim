@@ -31,8 +31,10 @@ case $SYSTEM_OS in
 esac
 
 if [[ "$1" = "" ]]; then
+	echo "${GREEN}ARGUMENT $1 NVIM...${NC}"
 	NEOVIM_VERSION=$VERSION
 else
+	echo "${GREEN}ARGUMENT $1 NVIM...${NC}"
 	NEOVIM_VERSION=$1
 fi
 
