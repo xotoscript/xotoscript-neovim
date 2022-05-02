@@ -1,6 +1,8 @@
 USER_HOME=$HOME
 BYPASS=true
 VERSION=0.6.0
+NEOVIM_VERSION=""
+MAIN_BYPASS=""
 
 ################################################ EDITOR
 
