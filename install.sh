@@ -1,10 +1,11 @@
 #!/bin/sh
 
+VERSION=0.8.0
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-VERSION=0.6.0
 SYSTEM_OSS=''
 SYSTEM_OS="$(uname)"
 
@@ -29,14 +30,6 @@ case $SYSTEM_OS in
 	;;
 *) ;;
 esac
-
-if [[ "$3" = "" ]]; then
-	echo "${GREEN}ARGUMENT $3 NVIM...${NC}"
-	NEOVIM_VERSION=$VERSION
-else
-	echo "${GREEN}ARGUMENT $3 NVIM...${NC}"
-	NEOVIM_VERSION=$1
-fi
 
 ################################################ INSTALL
 
