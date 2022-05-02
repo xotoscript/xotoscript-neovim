@@ -1,5 +1,12 @@
 USER_HOME=$HOME
-NEOVIM_VERSION=0.7.0
+
+VERSION=0.6.0
+
+if [[ "$1" == "" ]]; then
+  NEOVIM_VERSION=VERSION
+else
+ NEOVIM_VERSION=$1
+fi
 
 ################################################ EDITOR
 
