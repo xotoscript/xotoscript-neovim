@@ -5,18 +5,20 @@ VERSION=0.6.0
 ################################################ EDITOR
 
 # CHECK VERSION
-if [[ "$1" = "" ]]; then
+if [[ "$1" == "" ]]; then
 	NEOVIM_VERSION=$VERSION
 else
 	NEOVIM_VERSION=$1
 fi
 
 # CHECK BYPASS
-if [[ "$2" = false ]]; then
+if [[ "$2" == false ]]; then
 	BYPASS=true
 else
 	BYPASS=false
 fi
+
+echo $2
 
 ################################################ EDITOR
 
@@ -28,7 +30,7 @@ function install() {
 
 ################################################ EDITOR
 
-if [[ $(which vim 2>/dev/null) && $BYPASS = true ]]; then
+if [[ $(which vim 2>/dev/null) && BYPASS = true ]]; then
 	echo "vim found"
 	install
 else
