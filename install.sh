@@ -30,7 +30,7 @@ function install() {
 
 ################################################ EDITOR
 
-if [[ $(which vim 2>/dev/null) || $MAIN_BYPASS ]]; then
+if [[ $(which vim 2>/dev/null) || $MAIN_BYPASS = true ]]; then
 	echo "vim found"
 	install
 else
