@@ -30,11 +30,11 @@ case $SYSTEM_OS in
 *) ;;
 esac
 
-if [[ "$1" = "" ]]; then
-	echo "${GREEN}ARGUMENT $1 NVIM...${NC}"
+if [[ "$3" = "" ]]; then
+	echo "${GREEN}ARGUMENT $3 NVIM...${NC}"
 	NEOVIM_VERSION=$VERSION
 else
-	echo "${GREEN}ARGUMENT $1 NVIM...${NC}"
+	echo "${GREEN}ARGUMENT $3 NVIM...${NC}"
 	NEOVIM_VERSION=$1
 fi
 
