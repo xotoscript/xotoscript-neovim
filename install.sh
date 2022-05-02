@@ -1,8 +1,6 @@
 USER_HOME=$HOME
-BYPASS=true
+
 VERSION=0.6.0
-NEOVIM_VERSION=""
-MAIN_BYPASS=""
 
 ################################################ EDITOR
 
@@ -14,10 +12,10 @@ else
 fi
 
 # CHECK BYPASS
-if [[ "$2" = "" ]]; then
-	MAIN_BYPASS=false
+if [[ "$2" = true ]]; then
+	BYPASS=true
 else
-	MAIN_BYPASS=$BYPASS
+	BYPASS=false
 fi
 
 ################################################ EDITOR
@@ -30,7 +28,7 @@ function install() {
 
 ################################################ EDITOR
 
-if [[ $(which vim 2>/dev/null) || $MAIN_BYPASS = true ]]; then
+if [[ $(which vim 2>/dev/null) && $BYPASS = true ]]; then
 	echo "vim found"
 	install
 else
