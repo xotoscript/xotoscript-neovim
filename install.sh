@@ -13,9 +13,9 @@ fi
 
 # CHECK BYPASS
 if [[ "$2" == "" ]]; then
-	MAIN_BYPASS=BYPASS
+	MAIN_BYPASS=false
 else
-	NEOVIM_VERSION=$1
+	MAIN_BYPASS=BYPASS
 fi
 
 ################################################ EDITOR
