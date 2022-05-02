@@ -1,5 +1,5 @@
 USER_HOME=$HOME
-VERSION=0.6.0
+NEOVIM_VERSION=0.6.0
 ################################################ EDITOR
 
 # Detect the platform (similar to $OSTYPE)
@@ -15,8 +15,8 @@ case $OS in
 esac
 
 # CHECK VERSION
-if [[ "$1" == "" ]]; then
-	NEOVIM_VERSION=$VERSION
+if [[ "$1" = "" ]]; then
+	NEOVIM_VERSION=$NEOVIM_VERSION
 else
 	NEOVIM_VERSION=$1
 fi
@@ -27,7 +27,7 @@ function install() {
 	echo "☑ installing from : "
 	echo "https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS"
 	echo ""
-	sudo curl -LO https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS | bash
+	sudo curl -LO https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS 
 	tar xzvf ${USER_HOME}/$OS
 	sudo ln -sf ${USER_HOME}/$OS/bin/nvim /usr/local/bin/nvim
 }
