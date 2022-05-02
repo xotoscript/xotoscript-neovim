@@ -26,8 +26,8 @@ fi
 
 function install() {
 	echo "☑ installing from : "
-	echo "https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/nvim-linux64.tar.gz ${USER_HOME}/${OS}"
-	sudo curl -LO https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/nvim-linux64.tar.gz ${USER_HOME}/${OS} | bash
+	echo "https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/nvim-linux64.tar.gz ${USER_HOME}/$OS"
+	sudo curl -LO https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/nvim-linux64.tar.gz ${USER_HOME}/$OS | bash
 	tar xzvf ${USER_HOME}/nvim-linux64.tar.gz
 	sudo ln -sf ${USER_HOME}/nvim-linux64/bin/nvim /usr/bin/nvim
 }
