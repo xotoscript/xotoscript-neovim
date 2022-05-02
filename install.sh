@@ -29,7 +29,16 @@ function install() {
 	echo "https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS"
 	echo ""
 	sudo curl -LO https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/$OS ${USER_HOME}/$OS | bash
-	sudo tar xzvf ${USER_HOME}/$OS
+
+	tar xzvf ${USER_HOME}/$OS
+
+	# CHECK VERSION
+	# if [[ "$1" == "" ]]; then
+	# 	NEOVIM_VERSION=$VERSION
+	# else if [[  ]]
+
+	# fi
+
 	sudo ln -sf ${USER_HOME}/$OS/bin/nvim /usr/local/bin/nvim
 }
 
