@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NEOVIM_VERSION=0.8.0
+NEOVIM_VERSION=0.7.0
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
