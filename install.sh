@@ -59,13 +59,23 @@ echo "${GREEN}NVIM FOUND...${NC}"
 removeInstalled
 install
 
-if [ -d "${HOME}/.config" ]; then
+if [ ! -d "${HOME}/.config" ]; then
+	echo "${RED}NO .CONFIG CREATING...${NC}"
 	mkdir ${HOME}/.config
 fi
 
-git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
+if [ -d "${HOME}/.config/nvim" ]; then
+	echo "${RED}REMOVING NVIM FROM .CONFIG FOLDER...${NC}"
+	rm -rf ${HOME}/.config/nvim
+	git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
+else
+	git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
+fi
 
 echo ""
 echo "${GREEN}COMPLETED...${NC}"
+
+
+
 
 ################################################ END
