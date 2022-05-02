@@ -12,7 +12,7 @@ else
 fi
 
 # CHECK BYPASS
-if [[ "$2" = true ]]; then
+if [[ "$2" = false ]]; then
 	BYPASS=true
 else
 	BYPASS=false
