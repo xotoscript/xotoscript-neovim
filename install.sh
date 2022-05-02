@@ -35,7 +35,7 @@ esac
 
 function install() {
 	echo "${GREEN}Installing NVIM...${NC}"
-	URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/${SYSTEM_OSS}.tar.gz"
+	URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${SYSTEM_OSS}.tar.gz"
 	echo $URL
 	echo ""
 	curl -LO $URL
