@@ -35,7 +35,6 @@ esac
 
 function install() {
 	echo "${GREEN}Installing NVIM...${NC}"
-
 	URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/${SYSTEM_OSS}.tar.gz"
 	echo $URL
 	echo ""
@@ -49,20 +48,8 @@ function install() {
 ################################################ REMOVE
 
 function removeInstalled() {
-
 	echo "${RED}REMOVING NVIM...${NC}"
-
-	rm -rf ${HOME}/nvim-osx64 \
-		${HOME}/nvim.appimage \
-		/usr/local/Cellar/nvim \
-		/usr/local/bin/nvim \
-		${HOME}/.cache/nvim \
-		${HOME}/.cache/nvim \
-		${HOME}/.local/share/nvim \
-		/usr/local/share/lua \
-		/usr/local/Cellar/luajit-openresty \
-		/usr/local/share/luajit-2.1.0-beta3 \
-		/usr/local/lib/lua
+	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
 }
 
 ################################################ PROCESS
@@ -82,7 +69,7 @@ else
 	install
 
 	echo ""
-	echo "${RED}NVIM INSTALL NOT COMPLETE NVIM...${NC}"
+	echo "${RED}NVIM INSTALL WITHOUT REMOVE...${NC}"
 fi
 
 ################################################ END
