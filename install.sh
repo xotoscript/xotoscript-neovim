@@ -7,14 +7,14 @@ MAIN_BYPASS=""
 ################################################ EDITOR
 
 # CHECK VERSION
-if [[ "$1" == "" ]]; then
+if [[ "$1" = "" ]]; then
 	NEOVIM_VERSION=$VERSION
 else
 	NEOVIM_VERSION=$1
 fi
 
 # CHECK BYPASS
-if [[ "$2" == "" ]]; then
+if [[ "$2" = "" ]]; then
 	MAIN_BYPASS=false
 else
 	MAIN_BYPASS=$BYPASS
@@ -30,7 +30,7 @@ function install() {
 
 ################################################ EDITOR
 
-if [ $(which vim 2>/dev/null) || $MAIN_BYPASS = true ]; then
+if [[ $(which vim 2>/dev/null) || $MAIN_BYPASS = true ]]; then
 	echo "vim found"
 	install
 else
