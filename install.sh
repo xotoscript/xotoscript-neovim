@@ -140,7 +140,6 @@ function createEditor() {
 
 ################################# PROCESS
 
-
 progress_bar 1
 removeInstalledNvim
 progress_bar 2
@@ -152,7 +151,6 @@ createNvim
 progress_bar 8
 createEditor
 progress_bar 10
-
 
 echo ""
 
