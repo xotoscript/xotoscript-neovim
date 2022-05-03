@@ -88,6 +88,4 @@ createEditor
 echo ""
 echo "${GREEN}COMPLETED... 🥘${NC}"
 
-lvim +PackerSync
-
 ################################################ END
