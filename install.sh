@@ -63,7 +63,6 @@ function install() {
 function removeInstalledNvim() {
 	echo ""
 	echo "${RED} ❌ REMOVING NVIM${NC}"
-
 	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
 }
@@ -122,10 +121,6 @@ install
 createNvim
 createEditor
 
-# percent <integer to compare> <reference integer> <variable name>
-percent 33333 50000 testvar
-printf '%8s%%\n' "$testvar"c
-
 echo ""
 
 ################################################ END
@@ -149,7 +144,34 @@ echo ""
 
 ################################################ END
 
-percent() {
-	local p=00$(($1 * 100000 / $2))
-	printf -v "$3" %.2f ${p::-3}.${p: -3}
+function progress_bar() {
+    bar=""
+    total=10
+    [[ -z $1 ]] && input=0 || input=${1}
+    x="##"
+   for i in `seq 1 10`; do
+        if [ $i -le $input ] ;then
+            bar=$bar$x
+        else
+            bar="$bar  "
+       fi
+    done
+    #pct=$((200*$input/$total % 2 + 100*$input/$total))
+    pct=$(($input*10))
+    echo -ne "Progress : [ ${bar} ] (${pct}%) \r"    
+    sleep 1
+    if [ $input -eq 10 ] ;then
+        echo -ne '\n'
+    fi
+
 }
+
+progress_bar 1
+echo "doing something ..."
+progress_bar 2
+echo "doing something ..."
+progress_bar 3
+echo "doing something ..."
+progress_bar 8
+echo "doing something ..."
+progress_bar 10
