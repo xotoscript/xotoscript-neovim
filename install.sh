@@ -2,9 +2,15 @@
 
 NEOVIM_VERSION=0.7.0
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
 NC='\033[0m'
+BLACK="\[\033[0;30m\]"  # Black
+RED="\[\033[0;31m\]"    # Red
+GREEN="\[\033[0;32m\]"  # Green
+YELLOW="\[\033[0;33m\]" # Yellow
+BLUE="\[\033[0;34m\]"   # Blue
+PURPLE="\[\033[0;35m\]" # Purple
+CYAN="\[\033[0;36m\]"   # Cyan
+WHITE="\[\033[0;37m\]"  # White
 
 SYSTEM_MACHINE=''
 SYSTEM_OS="$(uname)"
@@ -35,7 +41,8 @@ esac
 ################################################ INSTALL
 
 function install() {
-	echo "${GREEN}Installing NVIM...${NC}"
+	echo ""
+	echo "${GREEN}🧑🏽‍💻 INSTALLING NVIM${NC}"
 	echo ""
 	URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${SYSTEM_MACHINE}.tar.gz"
 	echo $URL
@@ -50,7 +57,8 @@ function install() {
 ################################################ REMOVE NVIM
 
 function removeInstalledNvim() {
-	echo "${RED}REMOVING NVIM...${NC}"
+	echo ""
+	echo "${RED}❌ REMOVING NVIM${NC}"
 	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
 }
@@ -58,7 +66,8 @@ function removeInstalledNvim() {
 ################################################ REMOVE LVIM
 
 function removeInstalledLvim() {
-	echo "${RED}REMOVING LVIM...${NC}"
+	echo ""
+	echo "${RED}❌ REMOVING LVIM${NC}"
 	echo ""
 	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
 }
@@ -67,7 +76,8 @@ function removeInstalledLvim() {
 
 function createNvim() {
 	if [ ! -d "${HOME}/.config" ]; then
-		echo "${RED}NO .CONFIG CREATING...${NC}"
+		echo ""
+		echo "${RED}NO ./.CONFIG CREATING${NC}"
 		echo ""
 		mkdir ${HOME}/.config
 	fi
@@ -77,12 +87,23 @@ function createNvim() {
 
 function createEditor() {
 	if [ -d "${HOME}/.config/nvim" ]; then
-		echo "${RED}REMOVING NVIM FROM .CONFIG FOLDER...${NC}"
+		echo ""
+		echo "${RED}❌ REMOVING NVIM FROM ./.CONFIG FOLDER${NC}"
 		echo ""
 		rm -rf ${HOME}/.config/nvim
+		echo ""
+		echo "${GREEN}🧑🏽‍💻 INSTALLING LVIM${NC}"
+		echo ""
+
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+
+		echo ""
+		echo "${GREEN}🧑🏽‍💻 INSTALLING COSMIC-NVIM${NC}"
+		echo ""
+
 		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
 	else
+		echo ""
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
 		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
 	fi
@@ -110,12 +131,9 @@ echo "${GREEN}.##.......####.##....##.####..######..##.....##.########.########.
 
 echo ""
 echo ""
-echo "${GREEN}NOW JUST RUN : ${NC}"
+echo "${YELLOW}🖍 NOW JUST RUN : ${NC}"
 echo ""
 echo "${GREEN}nvim +PackerSync # to install and run all deps for nvim ${NC}"
-echo ""
-echo "~ OR"
-echo ""
 echo "${GREEN}lvim +PackerSync # to install and run all deps for lvim ${NC}"
 echo ""
 echo ""
