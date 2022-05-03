@@ -2,7 +2,6 @@
 
 NEOVIM_VERSION=0.7.0
 
-
 # RED='\033[0;31m'
 # GREEN='\033[0;32m'
 # NC='\033[0m'
@@ -64,6 +63,7 @@ function install() {
 function removeInstalledNvim() {
 	echo ""
 	echo "${RED} ❌ REMOVING NVIM${NC}"
+
 	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
 }
@@ -122,6 +122,10 @@ install
 createNvim
 createEditor
 
+# percent <integer to compare> <reference integer> <variable name>
+percent 33333 50000 testvar
+printf '%8s%%\n' "$testvar"c
+
 echo ""
 
 ################################################ END
@@ -142,3 +146,10 @@ echo "${GREEN}nvim +PackerSync # to install and run all deps for nvim ${NC}"
 echo "${GREEN}lvim +PackerSync # to install and run all deps for lvim ${NC}"
 echo ""
 echo ""
+
+################################################ END
+
+percent() {
+	local p=00$(($1 * 100000 / $2))
+	printf -v "$3" %.2f ${p::-3}.${p: -3}
+}
