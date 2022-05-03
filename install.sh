@@ -40,6 +40,83 @@ cleanup() {
 	exit 1
 }
 
+##################### PROGRESSBAR
+
+#
+# Usage:
+# Source this script
+# setup_scroll_area
+# draw_progress_bar 10
+# draw_progress_bar 90
+# destroy_scroll_area
+#
+
+function setup_scroll_area() {
+	lines=$(tput lines)
+	let lines=$lines-1
+	echo -en "\n"
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[0;${lines}r"
+	echo -en "$CODE_RESTORE_CURSOR"
+	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
+	draw_progress_bar 0
+}
+
+function destroy_scroll_area() {
+	lines=$(tput lines)
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[0;${lines}r"
+	echo -en "$CODE_RESTORE_CURSOR"
+	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
+	clear_progress_bar
+	echo -en "\n\n"
+}
+
+function draw_progress_bar() {
+	percentage=$1
+	lines=$(tput lines)
+	let lines=$lines
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[${lines};0f"
+	tput el
+	print_bar_text $percentage
+	echo -en "$CODE_RESTORE_CURSOR"
+}
+
+function clear_progress_bar() {
+	lines=$(tput lines)
+	let lines=$lines
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[${lines};0f"
+	tput el
+	echo -en "$CODE_RESTORE_CURSOR"
+}
+
+function print_bar_text() {
+	local percentage=$1
+	let remainder=100-$percentage
+	progress_bar=$(
+		echo -ne "["
+		echo -en "${COLOR_FG}${COLOR_BG}"
+		printf_new "#" $percentage
+		echo -en "${RESTORE_FG}${RESTORE_BG}"
+		printf_new "." $remainder
+		echo -ne "]"
+	)
+	if [ $1 -gt 99 ]; then
+		echo -ne "${progress_bar}"
+	else
+		echo -ne "${progress_bar}"
+	fi
+}
+
+printf_new() {
+	str=$1
+	num=$2
+	v=$(printf "%-${num}s" "$str")
+	echo -ne "${v// /$str}"
+}
+
 ################################# CASES
 
 case $SYSTEM_OS in
@@ -157,82 +234,5 @@ echo "${GREEN}nvim +PackerSync # to install and run all deps for nvim ${NC}"
 echo "${GREEN}lvim +PackerSync # to install and run all deps for lvim ${NC}"
 echo ""
 echo ""
-
-##################### PROGRESSBAR
-
-#
-# Usage:
-# Source this script
-# setup_scroll_area
-# draw_progress_bar 10
-# draw_progress_bar 90
-# destroy_scroll_area
-#
-
-function setup_scroll_area() {
-	lines=$(tput lines)
-	let lines=$lines-1
-	echo -en "\n"
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[0;${lines}r"
-	echo -en "$CODE_RESTORE_CURSOR"
-	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
-	draw_progress_bar 0
-}
-
-function destroy_scroll_area() {
-	lines=$(tput lines)
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[0;${lines}r"
-	echo -en "$CODE_RESTORE_CURSOR"
-	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
-	clear_progress_bar
-	echo -en "\n\n"
-}
-
-function draw_progress_bar() {
-	percentage=$1
-	lines=$(tput lines)
-	let lines=$lines
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[${lines};0f"
-	tput el
-	print_bar_text $percentage
-	echo -en "$CODE_RESTORE_CURSOR"
-}
-
-function clear_progress_bar() {
-	lines=$(tput lines)
-	let lines=$lines
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[${lines};0f"
-	tput el
-	echo -en "$CODE_RESTORE_CURSOR"
-}
-
-function print_bar_text() {
-	local percentage=$1
-	let remainder=100-$percentage
-	progress_bar=$(
-		echo -ne "["
-		echo -en "${COLOR_FG}${COLOR_BG}"
-		printf_new "#" $percentage
-		echo -en "${RESTORE_FG}${RESTORE_BG}"
-		printf_new "." $remainder
-		echo -ne "]"
-	)
-	if [ $1 -gt 99 ]; then
-		echo -ne "${progress_bar}"
-	else
-		echo -ne "${progress_bar}"
-	fi
-}
-
-printf_new() {
-	str=$1
-	num=$2
-	v=$(printf "%-${num}s" "$str")
-	echo -ne "${v// /$str}"
-}
 
 ################################# END
