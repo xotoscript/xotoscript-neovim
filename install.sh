@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# TODO CHECK
+# bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/rolling/utils/installer/install-neovim-from-release)
+
 NEOVIM_VERSION=0.7.0
 
 RED='\033[0;31m'
@@ -47,12 +50,20 @@ function install() {
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
 }
 
-################################################ REMOVE
+################################################ REMOVE NVIM
 
-function removeInstalled() {
+function removeInstalledNvim() {
 	echo "${RED}REMOVING NVIM...${NC}"
 	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
+}
+
+################################################ REMOVE LVIM
+
+function removeInstalledLvim() {
+	echo "${RED}REMOVING LVIM...${NC}"
+	echo ""
+	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
 }
 
 ################################################ CREATE NVIM FOLDER
@@ -73,14 +84,17 @@ function createEditor() {
 		echo ""
 		rm -rf ${HOME}/.config/nvim
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
 	else
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
 	fi
 }
 
 ################################################ PROCESS
 
-removeInstalled
+removeInstalledNvim
+removeInstalledLvim
 install
 createNvim
 createEditor
