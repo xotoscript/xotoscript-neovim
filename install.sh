@@ -47,7 +47,7 @@ esac
 
 function install() {
 	echo ""
-	echo "${GREEN}🧑🏽‍💻 INSTALLING NVIM${NC}"
+	echo "${GREEN} 🧑🏽‍💻 INSTALLING NVIM${NC}"
 	echo ""
 	URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${SYSTEM_MACHINE}.tar.gz"
 	echo $URL
@@ -63,7 +63,7 @@ function install() {
 
 function removeInstalledNvim() {
 	echo ""
-	echo "${RED}❌ REMOVING NVIM${NC}"
+	echo "${RED} ❌ REMOVING NVIM${NC}"
 	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
 }
@@ -72,7 +72,7 @@ function removeInstalledNvim() {
 
 function removeInstalledLvim() {
 	echo ""
-	echo "${RED}❌ REMOVING LVIM${NC}"
+	echo "${RED} ❌ REMOVING LVIM${NC}"
 	echo ""
 	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
 }
@@ -82,7 +82,7 @@ function removeInstalledLvim() {
 function createNvim() {
 	if [ ! -d "${HOME}/.config" ]; then
 		echo ""
-		echo "${RED}NO ./.CONFIG CREATING${NC}"
+		echo "${RED} ❌ NO ./.CONFIG CREATING${NC}"
 		echo ""
 		mkdir ${HOME}/.config
 	fi
@@ -93,17 +93,17 @@ function createNvim() {
 function createEditor() {
 	if [ -d "${HOME}/.config/nvim" ]; then
 		echo ""
-		echo "${RED}❌ REMOVING NVIM FROM ./.CONFIG FOLDER${NC}"
+		echo "${RED} ❌ REMOVING NVIM FROM ./.CONFIG FOLDER${NC}"
 		echo ""
 		rm -rf ${HOME}/.config/nvim
 		echo ""
-		echo "${GREEN}🧑🏽‍💻 INSTALLING LVIM${NC}"
+		echo "${GREEN} 🧑🏽‍💻 INSTALLING LVIM${NC}"
 		echo ""
 
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
 
 		echo ""
-		echo "${GREEN}🧑🏽‍💻 INSTALLING COSMIC-NVIM${NC}"
+		echo "${GREEN} 🧑🏽‍💻 INSTALLING COSMIC-NVIM${NC}"
 		echo ""
 
 		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
@@ -126,17 +126,17 @@ echo ""
 
 ################################################ END
 
-echo "${GREEN}.########.####.##....##.####..######..##.....##.########.########.${NC}"
-echo "${GREEN}.##........##..###...##..##..##....##.##.....##.##.......##.....##${NC}"
-echo "${GREEN}.##........##..####..##..##..##.......##.....##.##.......##.....##${NC}"
-echo "${GREEN}.######....##..##.##.##..##...######..#########.######...##.....##${NC}"
-echo "${GREEN}.##........##..##..####..##........##.##.....##.##.......##.....##${NC}"
-echo "${GREEN}.##........##..##...###..##..##....##.##.....##.##.......##.....##${NC}"
-echo "${GREEN}.##.......####.##....##.####..######..##.....##.########.########.${NC}"
+echo "${YELLOW}.########.####.##....##.####..######..##.....##.########.########.${NC}"
+echo "${YELLOW}.##........##..###...##..##..##....##.##.....##.##.......##.....##${NC}"
+echo "${YELLOW}.##........##..####..##..##..##.......##.....##.##.......##.....##${NC}"
+echo "${YELLOW}.######....##..##.##.##..##...######..#########.######...##.....##${NC}"
+echo "${YELLOW}.##........##..##..####..##........##.##.....##.##.......##.....##${NC}"
+echo "${YELLOW}.##........##..##...###..##..##....##.##.....##.##.......##.....##${NC}"
+echo "${YELLOW}.##.......####.##....##.####..######..##.....##.########.########.${NC}"
 
 echo ""
 echo ""
-echo "${YELLOW}🖍 NOW JUST RUN : ${NC}"
+echo "${YELLOW} 🖍 NOW JUST RUN : ${NC}"
 echo ""
 echo "${GREEN}nvim +PackerSync # to install and run all deps for nvim ${NC}"
 echo "${GREEN}lvim +PackerSync # to install and run all deps for lvim ${NC}"
