@@ -1,10 +1,8 @@
 #!/bin/sh
 
-NEOVIM_VERSION=0.7.0
+################################# COLOR ENVIRONMENTS
 
-# RED='\033[0;31m'
-# GREEN='\033[0;32m'
-# NC='\033[0m'
+NEOVIM_VERSION=0.7.0
 
 NC='\033[0m'
 BLACK='\033[0;30m'  # Black
@@ -15,6 +13,18 @@ BLUE='\033[0;34m'   # Blue
 PURPLE='\033[0;35m' # Purple
 CYAN='\033[0;36m'   # Cyan
 WHITE='\033[0;37m'  # White
+
+################################# PROGRESS ENVIRONMENTS
+
+CODE_SAVE_CURSOR="\033[s"
+CODE_RESTORE_CURSOR="\033[u"
+CODE_CURSOR_IN_SCROLL_AREA="\033[1A"
+COLOR_FG="\e[30m"
+COLOR_BG="\e[42m"
+RESTORE_FG="\e[39m"
+RESTORE_BG="\e[49m"
+
+################################# VARS
 
 SYSTEM_MACHINE=''
 SYSTEM_OS="$(uname)"
@@ -28,7 +38,77 @@ cleanup() {
 	exit 1
 }
 
-################################################ CASES
+##################### PROGRESSBAR
+
+function setup_scroll_area() {
+	lines=$(tput lines)
+	let lines=$lines-1
+	echo -en "\n"
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[0;${lines}r"
+	echo -en "$CODE_RESTORE_CURSOR"
+	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
+	draw_progress_bar 0
+}
+
+function destroy_scroll_area() {
+	lines=$(tput lines)
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[0;${lines}r"
+	echo -en "$CODE_RESTORE_CURSOR"
+	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
+	clear_progress_bar
+	echo -en "\n\n"
+}
+
+function draw_progress_bar() {
+	percentage=$1
+	lines=$(tput lines)
+	let lines=$lines
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[${lines};0f"
+	tput el
+	print_bar_text $percentage
+	echo -en "$CODE_RESTORE_CURSOR"
+}
+
+function clear_progress_bar() {
+	lines=$(tput lines)
+	let lines=$lines
+	echo -en "$CODE_SAVE_CURSOR"
+	echo -en "\033[${lines};0f"
+	tput el
+	echo -en "$CODE_RESTORE_CURSOR"
+}
+
+function print_bar_text() {
+	local percentage=$1
+	let remainder=100-$percentage
+	progress_bar=$(
+		echo -ne "["
+		echo -en "${COLOR_FG}${COLOR_BG}"
+		printf_new "#" $percentage
+		echo -en "${RESTORE_FG}${RESTORE_BG}"
+		printf_new "." $remainder
+		echo -ne "]"
+	)
+	if [ $1 -gt 99 ]; then
+		echo -ne "${progress_bar}"
+	else
+		echo -ne "${progress_bar}"
+	fi
+}
+
+printf_new() {
+	str=$1
+	num=$2
+	v=$(printf "%-${num}s" "$str")
+	echo -ne "${v// /$str}"
+}
+
+################################# CASES
+
+setup_scroll_area
 
 case $SYSTEM_OS in
 'Linux')
@@ -42,7 +122,7 @@ case $SYSTEM_OS in
 *) ;;
 esac
 
-################################################ INSTALL
+################################# INSTALL
 
 function install() {
 	echo ""
@@ -58,7 +138,7 @@ function install() {
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
 }
 
-################################################ REMOVE NVIM
+################################# REMOVE NVIM
 
 function removeInstalledNvim() {
 	echo ""
@@ -67,7 +147,7 @@ function removeInstalledNvim() {
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
 }
 
-################################################ REMOVE LVIM
+################################# REMOVE LVIM
 
 function removeInstalledLvim() {
 	echo ""
@@ -76,7 +156,7 @@ function removeInstalledLvim() {
 	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
 }
 
-################################################ CREATE NVIM FOLDER
+################################# CREATE NVIM FOLDER
 
 function createNvim() {
 	if [ ! -d "${HOME}/.config" ]; then
@@ -87,7 +167,7 @@ function createNvim() {
 	fi
 }
 
-################################################ CREATE EDITOR
+################################# CREATE EDITOR
 
 function createEditor() {
 	if [ -d "${HOME}/.config/nvim" ]; then
@@ -113,17 +193,24 @@ function createEditor() {
 	fi
 }
 
-################################################ PROCESS
+################################# PROCESS
 
 removeInstalledNvim
+setup_scroll_area 10
 removeInstalledLvim
+setup_scroll_area 30
 install
+setup_scroll_area 50
 createNvim
+setup_scroll_area 70
 createEditor
+setup_scroll_area 100
+sleep 1
+destroy_scroll_area
 
 echo ""
 
-################################################ END
+################################# END
 
 echo "${YELLOW}.########.####.##....##.####..######..##.....##.########.########.${NC}"
 echo "${YELLOW}.##........##..###...##..##..##....##.##.....##.##.......##.....##${NC}"
@@ -142,36 +229,4 @@ echo "${GREEN}lvim +PackerSync # to install and run all deps for lvim ${NC}"
 echo ""
 echo ""
 
-################################################ END
-
-function progress_bar() {
-    bar=""
-    total=10
-    [[ -z $1 ]] && input=0 || input=${1}
-    x="##"
-   for i in `seq 1 10`; do
-        if [ $i -le $input ] ;then
-            bar=$bar$x
-        else
-            bar="$bar  "
-       fi
-    done
-    #pct=$((200*$input/$total % 2 + 100*$input/$total))
-    pct=$(($input*10))
-    echo -ne "Progress : [ ${bar} ] (${pct}%) \r"    
-    sleep 1
-    if [ $input -eq 10 ] ;then
-        echo -ne '\n'
-    fi
-
-}
-
-progress_bar 1
-echo "doing something ..."
-progress_bar 2
-echo "doing something ..."
-progress_bar 3
-echo "doing something ..."
-progress_bar 8
-echo "doing something ..."
-progress_bar 10
+################################# END
