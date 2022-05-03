@@ -3,14 +3,14 @@
 NEOVIM_VERSION=0.7.0
 
 NC='\033[0m'
-BLACK="\[\033[0;30m\]"  # Black
-RED="\[\033[0;31m\]"    # Red
-GREEN="\[\033[0;32m\]"  # Green
-YELLOW="\[\033[0;33m\]" # Yellow
-BLUE="\[\033[0;34m\]"   # Blue
-PURPLE="\[\033[0;35m\]" # Purple
-CYAN="\[\033[0;36m\]"   # Cyan
-WHITE="\[\033[0;37m\]"  # White
+BLACK="\033[0;30m"  # Black
+RED="\033[0;31m"    # Red
+GREEN="\033[0;32m"  # Green
+YELLOW="\033[0;33m" # Yellow
+BLUE="\033[0;34m"   # Blue
+PURPLE="\033[0;35m" # Purple
+CYAN="\033[0;36m"   # Cyan
+WHITE="\033[0;37m"  # White
 
 SYSTEM_MACHINE=''
 SYSTEM_OS="$(uname)"
