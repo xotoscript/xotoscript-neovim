@@ -117,8 +117,6 @@ printf_new() {
 
 ################################# CASES
 
-
-
 case $SYSTEM_OS in
 'Linux')
 	SYSTEM_MACHINE='nvim-linux64'
@@ -206,11 +204,16 @@ function createEditor() {
 
 setup_scroll_area
 removeInstalledNvim
+draw_progress_bar 10
 removeInstalledLvim
+draw_progress_bar 30
 install
+draw_progress_bar 50
 createNvim
+draw_progress_bar 70
 createEditor
-setup_scroll_area 90
+draw_progress_bar 100
+sleep 1
 destroy_scroll_area
 
 echo ""
