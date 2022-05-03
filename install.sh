@@ -155,19 +155,23 @@ function createEditor() {
 
 ################################# PROCESS
 
-printf "\n\n\n\n\n\n\n\n\n\n"
 progreSh 0 "${RED} ❌ REMOVING NVIM${NC}"
+echo ""
 removeInstalledNvim
 progreSh 20 "${RED} ❌ REMOVING LVIM{NC}"
+echo ""
 removeInstalledLvim
 progreSh 40 "${GREEN} 🧑🏽‍💻 DOWNLOADING NEOVIM${NC}"
+echo ""
 installNvim
 progreSh 60 "${GREEN} 🧑🏽‍💻 SETTING UP NVIM DIR ${NC}"
+echo ""
 createNvimDir
 progreSh 80 "${GREEN} 🧑🏽‍💻 INSTALLING COSMICVIM AND LVIM ${NC}"
+echo ""
 createEditor
 progreSh 100 "${PURPLE} 🖍 CLEANING UP ${NC}"
-printf "\n\n\n\n\n\n\n\n\n\n"
+echo ""
 
 ################################# END
 
