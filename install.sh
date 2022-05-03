@@ -6,7 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-SYSTEM_OSS=''
+SYSTEM_MACHINE=''
 SYSTEM_OS="$(uname)"
 
 trap cleanup 1 2 3 6
@@ -22,10 +22,11 @@ cleanup() {
 
 case $SYSTEM_OS in
 'Linux')
-	SYSTEM_OSS='nvim-linux64'
+	SYSTEM_MACHINE='nvim-linux64'
+	FILE='nvim-linux64'
 	;;
 'Darwin')
-	SYSTEM_OSS='nvim-macos'
+	SYSTEM_MACHINE='nvim-macos'
 	FILE="nvim-osx64"
 	;;
 *) ;;
@@ -35,12 +36,13 @@ esac
 
 function install() {
 	echo "${GREEN}Installing NVIM...${NC}"
-	URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${SYSTEM_OSS}.tar.gz"
+	echo ""
+	URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${SYSTEM_MACHINE}.tar.gz"
 	echo $URL
 	echo ""
 	curl -LO $URL
-	tar xzvf ${SYSTEM_OSS}.tar.gz >/dev/null 2>&1
-	rm -rf ${SYSTEM_OSS}.tar.gz
+	tar xzvf ${SYSTEM_MACHINE}.tar.gz >/dev/null 2>&1
+	rm -rf ${SYSTEM_MACHINE}.tar.gz
 	mv ./${FILE} ${HOME}/${FILE}
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
 }
@@ -49,33 +51,43 @@ function install() {
 
 function removeInstalled() {
 	echo "${RED}REMOVING NVIM...${NC}"
+	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
+}
+
+################################################ CREATE NVIM FOLDER
+
+function createNvim() {
+	if [ ! -d "${HOME}/.config" ]; then
+		echo "${RED}NO .CONFIG CREATING...${NC}"
+		echo ""
+		mkdir ${HOME}/.config
+	fi
+}
+
+################################################ CREATE EDITOR
+
+function createEditor() {
+	if [ -d "${HOME}/.config/nvim" ]; then
+		echo "${RED}REMOVING NVIM FROM .CONFIG FOLDER...${NC}"
+		echo ""
+		rm -rf ${HOME}/.config/nvim
+		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+	else
+		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+	fi
 }
 
 ################################################ PROCESS
 
-echo "${GREEN}NVIM FOUND...${NC}"
-
 removeInstalled
 install
-
-if [ ! -d "${HOME}/.config" ]; then
-	echo "${RED}NO .CONFIG CREATING...${NC}"
-	mkdir ${HOME}/.config
-fi
-
-if [ -d "${HOME}/.config/nvim" ]; then
-	echo "${RED}REMOVING NVIM FROM .CONFIG FOLDER...${NC}"
-	rm -rf ${HOME}/.config/nvim
-	git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
-else
-	git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
-fi
+createNvim
+createEditor
 
 echo ""
-echo "${GREEN}COMPLETED...${NC}"
+echo "${GREEN}COMPLETED... 🥘${NC}"
 
-
-
+lvim +PackerSync
 
 ################################################ END
