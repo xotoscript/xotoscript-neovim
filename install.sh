@@ -97,6 +97,25 @@ createNvim
 createEditor
 
 echo ""
-echo "${GREEN}COMPLETED... 🥘${NC}"
 
 ################################################ END
+
+echo "${GREEN}.########.####.##....##.####..######..##.....##.########.########.${NC}"
+echo "${GREEN}.##........##..###...##..##..##....##.##.....##.##.......##.....##${NC}"
+echo "${GREEN}.##........##..####..##..##..##.......##.....##.##.......##.....##${NC}"
+echo "${GREEN}.######....##..##.##.##..##...######..#########.######...##.....##${NC}"
+echo "${GREEN}.##........##..##..####..##........##.##.....##.##.......##.....##${NC}"
+echo "${GREEN}.##........##..##...###..##..##....##.##.....##.##.......##.....##${NC}"
+echo "${GREEN}.##.......####.##....##.####..######..##.....##.########.########.${NC}"
+
+echo ""
+echo ""
+echo "${GREEN}NOW JUST RUN : ${NC}"
+echo ""
+echo "${GREEN}nvim +PackerSync # to install and run all deps for nvim ${NC}"
+echo ""
+echo "~ OR"
+echo ""
+echo "${GREEN}lvim +PackerSync # to install and run all deps for lvim ${NC}"
+echo ""
+echo ""
