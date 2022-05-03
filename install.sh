@@ -30,29 +30,6 @@ cleanup() {
 	exit 1
 }
 
-##################### PROGRESSBAR
-
-function progress_bar() {
-	bar=""
-	total=10
-	[[ -z $1 ]] && input=0 || input=${1}
-	x="##"
-	for i in $(seq 1 10); do
-		if [ $i -le $input ]; then
-			bar=$bar$x
-		else
-			bar="$bar  "
-		fi
-	done
-	#pct=$((200*$input/$total % 2 + 100*$input/$total))
-	pct=$(($input * 10))
-	echo -ne "Progress : [ ${bar} ] (${pct}%) \r"
-	sleep 1
-	if [ $input -eq 10 ]; then
-		echo -ne '\n'
-	fi
-
-}
 ################################# CASES
 
 case $SYSTEM_OS in
@@ -140,18 +117,11 @@ function createEditor() {
 
 ################################# PROCESS
 
-progress_bar 1
 removeInstalledNvim
-progress_bar 2
 removeInstalledLvim
-progress_bar 3
 install
-progress_bar 5
 createNvim
-progress_bar 8
 createEditor
-progress_bar 10
-
 echo ""
 
 ################################# END
