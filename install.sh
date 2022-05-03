@@ -40,6 +40,15 @@ cleanup() {
 
 ##################### PROGRESSBAR
 
+#
+# Usage:
+# Source this script
+# setup_scroll_area
+# draw_progress_bar 10
+# draw_progress_bar 90
+# destroy_scroll_area
+#
+
 function setup_scroll_area() {
 	lines=$(tput lines)
 	let lines=$lines-1
@@ -108,7 +117,7 @@ printf_new() {
 
 ################################# CASES
 
-setup_scroll_area
+
 
 case $SYSTEM_OS in
 'Linux')
@@ -195,17 +204,13 @@ function createEditor() {
 
 ################################# PROCESS
 
+setup_scroll_area
 removeInstalledNvim
-setup_scroll_area 10
 removeInstalledLvim
-setup_scroll_area 30
 install
-setup_scroll_area 50
 createNvim
-setup_scroll_area 70
 createEditor
-setup_scroll_area 100
-sleep 1
+setup_scroll_area 90
 destroy_scroll_area
 
 echo ""
