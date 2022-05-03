@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# TODO CHECK
-# bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/rolling/utils/installer/install-neovim-from-release)
-
 NEOVIM_VERSION=0.7.0
 
 RED='\033[0;31m'
