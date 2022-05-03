@@ -131,14 +131,10 @@ setup_scroll_area
 removeInstalledNvim
 draw_progress_bar 10
 removeInstalledLvim
-draw_progress_bar 30
 install
-draw_progress_bar 50
 createNvim
-draw_progress_bar 70
 createEditor
 draw_progress_bar 90
-sleep 1
 destroy_scroll_area
 
 echo ""
