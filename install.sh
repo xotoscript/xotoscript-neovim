@@ -5,24 +5,14 @@
 NEOVIM_VERSION=0.7.0
 
 NC='\033[0m'
-BLACK='\033[0;30m'  
-RED='\033[0;31m'    
-GREEN='\033[0;32m'  
-YELLOW='\033[0;33m' 
-BLUE='\033[0;34m'   
-PURPLE='\033[0;35m' 
-CYAN='\033[0;36m'   
-WHITE='\033[0;37m'  
-
-################################# PROGRESS ENVIRONMENTS
-
-CODE_SAVE_CURSOR="\033[s"
-CODE_RESTORE_CURSOR="\033[u"
-CODE_CURSOR_IN_SCROLL_AREA="\033[1A"
-COLOR_FG="\e[30m"
-COLOR_BG="\e[42m"
-RESTORE_FG="\e[39m"
-RESTORE_BG="\e[49m"
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[0;37m'
 
 ################################# VARS
 
@@ -42,79 +32,59 @@ cleanup() {
 
 ##################### PROGRESSBAR
 
-#
-# Usage:
-# Source this script
-# setup_scroll_area
-# draw_progress_bar 10
-# draw_progress_bar 90
-# destroy_scroll_area
-#
-
-function setup_scroll_area() {
-	lines=$(tput lines)
-	let lines=$lines-1
-	echo -en "\n"
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[0;${lines}r"
-	echo -en "$CODE_RESTORE_CURSOR"
-	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
-	draw_progress_bar 0
-}
-
-function destroy_scroll_area() {
-	lines=$(tput lines)
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[0;${lines}r"
-	echo -en "$CODE_RESTORE_CURSOR"
-	echo -en "$CODE_CURSOR_IN_SCROLL_AREA"
-	clear_progress_bar
-	echo -en "\n\n"
-}
-
-function draw_progress_bar() {
-	percentage=$1
-	lines=$(tput lines)
-	let lines=$lines
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[${lines};0f"
-	tput el
-	print_bar_text $percentage
-	echo -en "$CODE_RESTORE_CURSOR"
-}
-
-function clear_progress_bar() {
-	lines=$(tput lines)
-	let lines=$lines
-	echo -en "$CODE_SAVE_CURSOR"
-	echo -en "\033[${lines};0f"
-	tput el
-	echo -en "$CODE_RESTORE_CURSOR"
-}
-
-function print_bar_text() {
-	local percentage=$1
-	let remainder=100-$percentage
-	progress_bar=$(
-		echo -ne "["
-		echo -en "${COLOR_FG}${COLOR_BG}"
-		printf_new "#" $percentage
-		echo -en "${RESTORE_FG}${RESTORE_BG}"
-		printf_new "." $remainder
-		echo -ne "]"
-	)
-	if [ $1 -gt 99 ]; then
-		echo -ne "${progress_bar}"
-	else
-		echo -ne "${progress_bar}"
-	fi
-}
-
-printf_new() {
-	str=$1
-	num=$2
-	v=$(printf "%-${num}s" "$str")
-	echo -ne "${v// /$str}"
+progreSh() {
+	LR='\033[1;31m'
+	LG='\033[1;32m'
+	LY='\033[1;33m'
+	LC='\033[1;36m'
+	LW='\033[1;37m'
+	NC='\033[0m'
+	if [ "${1}" = "0" ]; then TME=$(date +"%s"); fi
+	SEC=$(printf "%04d\n" $(($(date +"%s") - ${TME})))
+	SEC="$SEC sec"
+	PRC=$(printf "%.0f" ${1})
+	SHW=$(printf "%3d\n" ${PRC})
+	LNE=$(printf "%.0f" $((${PRC} / 2)))
+	LRR=$(printf "%.0f" $((${PRC} / 2 - 12)))
+	if [ ${LRR} -le 0 ]; then LRR=0; fi
+	LYY=$(printf "%.0f" $((${PRC} / 2 - 24)))
+	if [ ${LYY} -le 0 ]; then LYY=0; fi
+	LCC=$(printf "%.0f" $((${PRC} / 2 - 36)))
+	if [ ${LCC} -le 0 ]; then LCC=0; fi
+	LGG=$(printf "%.0f" $((${PRC} / 2 - 48)))
+	if [ ${LGG} -le 0 ]; then LGG=0; fi
+	LRR_=""
+	LYY_=""
+	LCC_=""
+	LGG_=""
+	for ((i = 1; i <= 13; i++)); do
+		DOTS=""
+		for ((ii = ${i}; ii < 13; ii++)); do DOTS="${DOTS}."; done
+		if [ ${i} -le ${LNE} ]; then LRR_="${LRR_}#"; else LRR_="${LRR_}."; fi
+		echo -ne "  ${LW}${SEC}  ${LR}${LRR_}${DOTS}${LY}............${LC}............${LG}............ ${SHW}%${NC}\r"
+		if [ ${LNE} -ge 1 ]; then sleep .05; fi
+	done
+	for ((i = 14; i <= 25; i++)); do
+		DOTS=""
+		for ((ii = ${i}; ii < 25; ii++)); do DOTS="${DOTS}."; done
+		if [ ${i} -le ${LNE} ]; then LYY_="${LYY_}#"; else LYY_="${LYY_}."; fi
+		echo -ne "  ${LW}${SEC}  ${LR}${LRR_}${LY}${LYY_}${DOTS}${LC}............${LG}............ ${SHW}%${NC}\r"
+		if [ ${LNE} -ge 14 ]; then sleep .05; fi
+	done
+	for ((i = 26; i <= 37; i++)); do
+		DOTS=""
+		for ((ii = ${i}; ii < 37; ii++)); do DOTS="${DOTS}."; done
+		if [ ${i} -le ${LNE} ]; then LCC_="${LCC_}#"; else LCC_="${LCC_}."; fi
+		echo -ne "  ${LW}${SEC}  ${LR}${LRR_}${LY}${LYY_}${LC}${LCC_}${DOTS}${LG}............ ${SHW}%${NC}\r"
+		if [ ${LNE} -ge 26 ]; then sleep .05; fi
+	done
+	for ((i = 38; i <= 49; i++)); do
+		DOTS=""
+		for ((ii = ${i}; ii < 49; ii++)); do DOTS="${DOTS}."; done
+		if [ ${i} -le ${LNE} ]; then LGG_="${LGG_}#"; else LGG_="${LGG_}."; fi
+		echo -ne "  ${LW}${SEC}  ${LR}${LRR_}${LY}${LYY_}${LC}${LCC_}${LG}${LGG_}${DOTS} ${SHW}%${NC}\r"
+		if [ ${LNE} -ge 38 ]; then sleep .05; fi
+	done
 }
 
 ################################# CASES
@@ -204,15 +174,24 @@ function createEditor() {
 
 ################################# PROCESS
 
-setup_scroll_area
+printf "\n\n\n\n\n\n\n\n\n\n"
+progreSh 0
+progreSh 10
 removeInstalledNvim
-draw_progress_bar 10
+progreSh 20
+progreSh 30
 removeInstalledLvim
+progreSh 40
+progreSh 50
 install
+progreSh 60
+progreSh 70
 createNvim
+progreSh 80
+progreSh 90
 createEditor
-draw_progress_bar 90
-destroy_scroll_area
+progreSh 100
+printf "\n\n\n\n\n\n\n\n\n\n"
 
 echo ""
 
