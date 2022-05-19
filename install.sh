@@ -44,9 +44,9 @@ esac
 
 ################################################ INSTALL
 
-function install() {
+function installNeovim() {
 	echo ""
-	echo "${GREEN} 🧑🏽‍💻 INSTALLING NVIM${NC}"
+	echo "${GREEN} 🧑🏽‍💻 INSTALLING NEOVIM${NC}"
 	echo ""
 	URL="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${SYSTEM_MACHINE}.tar.gz"
 	echo $URL
@@ -58,27 +58,19 @@ function install() {
 	ln -sf ${HOME}/${FILE}/bin/nvim /usr/local/bin/nvim
 }
 
-################################################ REMOVE NVIM
+################################################ REMOVE LVIM
 
 function removeInstalledNvim() {
 	echo ""
-	echo "${RED} ❌ REMOVING NVIM${NC}"
+	echo "${RED} ❌ REMOVING NVIM & LVIM${NC}"
 	echo ""
 	rm -rf ${HOME}/nvim-osx64 ${HOME}/nvim.appimage /usr/local/Cellar/nvim /usr/local/bin/nvim ${HOME}/.cache/nvim ${HOME}/.cache/nvim ${HOME}/.local/share/nvim /usr/local/share/lua /usr/local/Cellar/luajit-openresty /usr/local/share/luajit-2.1.0-beta3 /usr/local/lib/lua
-}
-
-################################################ REMOVE LVIM
-
-function removeInstalledLvim() {
-	echo ""
-	echo "${RED} ❌ REMOVING LVIM${NC}"
-	echo ""
 	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
 }
 
-################################################ CREATE NVIM FOLDER
+################################################ INSTALL NVIM FOLDER
 
-function createNvim() {
+function installNvimFolder() {
 	if [ ! -d "${HOME}/.config" ]; then
 		echo ""
 		echo "${RED} ❌ NO ./.CONFIG CREATING${NC}"
@@ -87,9 +79,9 @@ function createNvim() {
 	fi
 }
 
-################################################ CREATE EDITOR
+################################################ INSTALL EDITOR
 
-function createEditor() {
+function installEditor() {
 	if [ -d "${HOME}/.config/nvim" ]; then
 		echo ""
 		echo "${RED} ❌ REMOVING NVIM FROM ./.CONFIG FOLDER${NC}"
@@ -106,17 +98,16 @@ function createEditor() {
 	else
 		echo ""
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
+		# git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
 	fi
 }
 
 ################################################ PROCESS
 
 removeInstalledNvim
-removeInstalledLvim
-install
-createNvim
-createEditor
+installNeovim
+installNvimFolder
+installEditor
 
 echo ""
 
