@@ -98,7 +98,7 @@ function installEditor() {
 	else
 		echo ""
 		bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-		# git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
+		git clone git@github.com:CosmicNvim/CosmicNvim.git ${HOME}/.config/nvim
 	fi
 }
 
